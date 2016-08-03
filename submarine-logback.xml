@@ -1,0 +1,81 @@
+<included>
+
+	<!-- Send debug messages to System.out -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- By default, encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder -->
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level %logger{35}
+				[%t] %msg%n%ex{full}
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- Send debug messages to a file at "c:/jcg.log" -->
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>~/submarine.log</file>
+
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level %logger{35}
+				[%t] %msg%n%ex{full}
+			</pattern>
+		</encoder>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover. Make sure the path matches the one in the file element or else the rollover logs 
+				are placed in the working directory. -->
+			<fileNamePattern>~/submarine_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>5MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<!-- keep 2 days' worth of history -->
+			<maxHistory>2</maxHistory>
+		</rollingPolicy>
+	</appender>
+
+	<!-- Tracking Appender -->
+	<appender name="tracking.logger.appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+		<file>~/submarine-tracking.log</file>
+
+		<encoder>
+			<charset>UTF-8</charset>
+			<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %level %logger{20}
+				[%t] %msg%n</pattern>
+		</encoder>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover. Make sure the path matches the one in the file element or else the rollover logs 
+				are placed in the working directory. -->
+			<fileNamePattern>~/submarine-tracking_%d{yyyy-MM-dd}.%i.log
+			</fileNamePattern>
+
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>5MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<!-- keep 2 days' worth of history -->
+			<maxHistory>2</maxHistory>
+		</rollingPolicy>
+	</appender>
+
+	<!-- Log level filtering -->
+	<logger name="submarine">
+		<level value="DEBUG" />
+	</logger>
+
+	<!--sets tracking logger -->
+	<logger name="tracking.logger" additivity="false">
+		<appender-ref ref="tracking.logger.appender" />
+	</logger>
+
+
+	<!-- By default, the level of the root level is set to INFO -->
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
+	</root>
+
+
+</included>

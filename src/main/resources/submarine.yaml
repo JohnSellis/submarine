@@ -1,0 +1,29 @@
+server.port: 8080
+endpoints.health.sensitive: false
+
+submarine:
+  name: submarine
+
+
+############################################ 
+############### MONGO DB     ############### 
+############################################
+spring.data.mongodb.database: submarine
+spring.data.mongodb.username:
+spring.data.mongodb.password:
+spring.data.mongodb.host: localhost
+spring.data.mongodb.uri: mongodb://localhost/submarine
+spring.data.mongodb.port:
+
+############################################ 
+############### HEALTHCHECK  ############### 
+############################################
+healthcheck.application.name: submarine
+healthcheck.application.version: 1.0.0
+
+############################################ 
+############### CORS CONFIG ################
+############################################ 
+submarine.sharedcorsconfig.access-control-allow-origin: '*'
+
+
